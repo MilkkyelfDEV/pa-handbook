@@ -674,7 +674,7 @@
 var T=[{n:'ภาษีหัก ณ ที่จ่าย',t:'ภาษีหัก ณ ที่จ่าย (Withholding Tax)',
 tabs:['ภาพรวม','อัตราภาษี','กรณีพิเศษ','ลักษณะงาน','วิธีคำนวณ'],heads:['อัตราภาษีที่พบบ่อย','ข้อควรระวังและกรณีศึกษาพิเศษ','ดูลักษณะงานก่อนเลือกยอดและอัตรา','ทริคการกดเครื่องคิดเลข']},
 {n:'โครงสร้างหมวดงบประมาณ',t:'โครงสร้างหมวดงบประมาณ',tabs:['ภาพรวม'],heads:[]},{n:'การตั้งแฟ้มเสนอลงนาม',t:'การตั้งแฟ้มเสนอลงนาม',tabs:['สัญญา','บันทึกข้อตกลง'],heads:['']},{n:'กำหนดจ่ายเช็ค',t:'กำหนดจ่ายเช็ค',tabs:['โครงการ','ผู้รับเหมา'],heads:['','']}];
-var nav=document.getElementById('nav'),main=document.getElementById('main'),cur=0,tab=0,open=false;
+var nav=document.getElementById('nav'),main=document.getElementById('main'),cur=1,tab=0,open=false;
 var CS={};
 function num(v){v=parseFloat(String(v).replace(/,/g,''));return isFinite(v)&&v>=0?v:null}
 function fm(n){return n.toLocaleString('en-US',{maximumFractionDigits:2})}
@@ -732,7 +732,7 @@ document.addEventListener('click',function(e){var c=e.target.closest?e.target.cl
 document.addEventListener('click',function(e){var k=e.target.closest?e.target.closest('[data-cat-back]'):null;if(k){var was=cat;cat=null;show(false);var r=main.querySelectorAll('.pa-cat li')[was];if(r)r.focus()}});
 document.addEventListener('click',function(e){var t=e.target.closest?e.target.closest('[data-lit]'):null;if(t){lit=!lit;applyLit(true)}});
 function renderNav(){
-nav.innerHTML=T.map(function(d,i){var has=d.tabs.length>1,exp=has&&i===cur&&open;
+nav.innerHTML=[1,3,2,0].map(function(i){var d=T[i],has=d.tabs.length>1,exp=has&&i===cur&&open;
 return '<li><button type="button" class="pa-nav__item" data-t="'+i+'"'+(has?' aria-expanded="'+exp+'"':'')+(i===cur&&!exp?' aria-current="true"':'')+'><span>'+d.n+'</span>'+(has?'<span class="pa-nav__caret" aria-hidden="true"></span>':'')+'</button>'
 +(has&&i===cur?'<div class="pa-nav__subwrap'+(exp?' is-open':'')+'"'+(exp?'':' inert')+'><div><ol class="pa-nav__sub">'+d.tabs.map(function(n,j){return '<li><button type="button" class="pa-nav__subitem" data-t="'+i+'" data-s="'+j+'"'+(j===tab?' aria-current="true"':'')+'>'+n+'</button></li>'}).join('')+'</ol></div></div>':'')+'</li>'}).join('');
 [].forEach.call(nav.querySelectorAll('.pa-nav__item'),function(b){b.addEventListener('click',function(){var i=+b.dataset.t;if(i!==cur){cur=i;tab=0;cat=null;open=true;show(true);return}
